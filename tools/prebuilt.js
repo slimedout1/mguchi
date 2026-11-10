@@ -1,13 +1,12 @@
 #!/usr/bin/env node
-// Prebuilt packages: just copy the pre-built .tgz from the app folder
+// Prebuilt packages: the .tgz is already built and in the app folder
 const fs = require('fs');
 const path = require('path');
 
 const appDir = process.argv[2];  // apps/chidori
-const outputPath = process.argv[3];  // output .tgz path
 
-if (!appDir || !outputPath) {
-  console.error('Usage: prebuilt.js <app-dir> <output-path>');
+if (!appDir) {
+  console.error('Usage: prebuilt.js <app-dir>');
   process.exit(1);
 }
 
@@ -22,7 +21,7 @@ const appJson = JSON.parse(fs.readFileSync(appJsonPath, 'utf8'));
 const id = appJson.id;
 const version = appJson.version;
 
-// Look for the pre-built package in the app directory
+// The pre-built package should already be in the app directory
 const prebuiltPath = path.join(appDir, `${id}@${version}.tgz`);
 
 if (!fs.existsSync(prebuiltPath)) {
@@ -31,7 +30,6 @@ if (!fs.existsSync(prebuiltPath)) {
   process.exit(1);
 }
 
-// Copy the pre-built package to the output location
-console.log(`Copying ${prebuiltPath} -> ${outputPath}`);
-fs.copyFileSync(prebuiltPath, outputPath);
-console.log(`Build complete: ${outputPath}`);
+// MGU Store expects the output at {dir}/{id}@{version}.tgz which is already there
+console.log(`Pre-built package ready: ${prebuiltPath}`);
+console.log(`Build complete (using pre-built package)`);
