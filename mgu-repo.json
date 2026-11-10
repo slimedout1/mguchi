@@ -7,7 +7,7 @@
     "mguHmi": ["ID7", "ID8"],
     "build": {
       "node": "tools/prebuilt.js",
-      "args": ["{dir}", "{output}"],
+      "args": ["{dir}"],
       "output": "{dir}/{id}@{version}.tgz"
     }
   }
